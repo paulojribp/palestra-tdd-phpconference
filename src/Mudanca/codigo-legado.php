@@ -1,5 +1,5 @@
 <?
-/*	function d($var) {
+	/*function d($var) {
 		echo "[DEBUG] = " . $var . PHP_EOL;
 	}*/
 
@@ -18,7 +18,7 @@
 	// Taxa cobrada pelo estado que recebe a mudança
 	$icms = 0.3;
 	// Taxa cobrada dentro do mesmo município
-	$iss = 0.08;
+	$iss = 0.008;
 
 	// Valor dos itens do cliente
 	$valorTotalDosItens = 5700.5;
@@ -46,20 +46,16 @@
 
 	// O seguro da mudança é 0,8% do valor dos itens
 	$seguroTotal = $valorTotalDosItens * (0.8/100);
-	//d($seguroTotal);
 	
 	// O valor total é o volume multiplicado pelo valor unitário
 	$coletaEntregaTotal = $valor_coleta_entrega * $volumeColetaEntrega;
-	//d($coletaEntregaTotal);
 	
 	// O valor total da mudança é o calculo abaixo
 	$soma1 = ($valorKm * $kmTotal) + $coletaEntregaTotal + $seguroTotal;
-	//d($soma1);
 	
 	// valor total da mudança (se for ICMS)
 	$somaTotalICMS = ($soma1 / (1-$icms)) - $soma1;
-	//d($somaTotalICMS);
-
+	
 	$freteTotal = $soma1;
 	
 	if ($tipoMedicao == Imposto::ICMS) {
@@ -67,7 +63,6 @@
 	} else if ($tipoMedicao == Imposto::ISS) {
 		$freteTotal += ($iss * $soma1); 
 	}
-	//d($freteTotal);
 	
 	$valores = moeda($valorKm) . ";" . moeda($valorKm * $kmTotal) . ";"
 		. moeda($somaTotalICMS) . ";" . moeda($freteTotal) . ";";
