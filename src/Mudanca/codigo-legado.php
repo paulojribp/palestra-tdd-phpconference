@@ -1,7 +1,7 @@
 <?
-	/*function d($var) {
+	function d($var) {
 		echo "[DEBUG] = " . $var . PHP_EOL;
-	}*/
+	}
 
 	class Imposto {
 		const ICMS = 0, ISS = 1;
@@ -16,7 +16,7 @@
 	}
 
 	// Taxa cobrada pelo estado que recebe a mudança
-	$icms = 0.3;
+	$icms = 0.03;
 	// Taxa cobrada dentro do mesmo município
 	$iss = 0.008;
 
@@ -52,7 +52,8 @@
 	
 	// O valor total da mudança é o calculo abaixo
 	$soma1 = ($valorKm * $kmTotal) + $coletaEntregaTotal + $seguroTotal;
-	
+	d($soma1);
+
 	// valor total da mudança (se for ICMS)
 	$somaTotalICMS = ($soma1 / (1-$icms)) - $soma1;
 	

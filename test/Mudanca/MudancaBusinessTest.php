@@ -6,13 +6,14 @@ require 'vendor/autoload.php';
 
 use PHPUnit_Framework_TestCase as PHPUnit;
 use Mudanca\Mudanca;
+use Mudanca\TipoImposto;
 
 class MudancaBusinessTest extends PHPUnit {
 	
 	public function testDeveCalcularICMS() {
 		$business = new MudancaBusiness;
-		$icmsCalculado = $business->calculaIcms(5000, 0.06);
-		$this->assertEquals(300, $icmsCalculado);
+		$icmsCalculado = $business->calculaIcms(5603.60, 0.03);
+		$this->assertEquals(173.31, round($icmsCalculado, 2));
 	}
 
 	public function testDeveCalcularISS() {
@@ -29,11 +30,19 @@ class MudancaBusinessTest extends PHPUnit {
 		$this->assertEquals(3.5, $valorMudanca);
 	}
 
-	public function testeDeveRetornarValorDaMudancaPorTipoComercial() {
+	public function testDeveRetornarValorDaMudancaPorTipoComercial() {
 		$business = new MudancaBusiness;
 		$valorMudanca = $business->valorMudanca(Mudanca::COMERCIAL);
 
 		$this->assertEquals(2.75, $valorMudanca);
+	}
+
+	public function testDeveCalcularCustoTotalDaMudanca() {
+		$business = new MudancaBusiness;
+		$valorTotal = $business->calculaCustoTotal(5700.5, 730, 1300, 
+				Mudanca::RESIDENCIAL, TipoImposto::ICMS);
+
+		$this->assertEquals(5776.91, round($valorTotal,2));
 	}
 
 }

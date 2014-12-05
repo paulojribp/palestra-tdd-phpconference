@@ -2,14 +2,15 @@
 
 namespace Mudanca;
 
-require 'Mudanca.php';
+require 'vendor/autoload.php';
 
 use Mudanca\Mudanca;
+use Mudanca\TipoImposto;
 
 class MudancaBusiness {
 	
 	public function calculaIcms($valor, $taxa) {
-		return $valor * $taxa;
+		return ($valor / (1-$taxa)) - $valor;
 	}
 
 	public function calculaIss($valor) {
@@ -24,6 +25,22 @@ class MudancaBusiness {
 		}
 
 		return 0;
+	}
+
+	public function calculaCustoTotal($valorItens, $volume, $km, $tipoMudanca, $tipoImposto) {
+		$valorKm = 2.31;
+		$taxa = 0.03;
+
+		$seguroItens = $valorItens * (0.8/100);
+		$valorCalculado = $this->valorMudanca($tipoMudanca) * $volume;
+		$valorMudanca = ($valorKm * $km) + $valorCalculado + $seguroItens;
+		if ($tipoImposto == TipoImposto::ISS) {
+			$valorMudanca += $this->calculaIss($valorMudanca);
+		} else if ($tipoImposto == TipoImposto::ICMS) {
+			$valorMudanca += $this->calculaIcms($valorMudanca, $taxa);
+		}
+
+		return $valorMudanca;
 	}
 
 }
