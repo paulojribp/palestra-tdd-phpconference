@@ -9,12 +9,14 @@ use Mudanca\TipoImposto;
 
 class MudancaBusiness {
 	
-	public function calculaIcms($valor, $taxa) {
-		return ($valor / (1-$taxa)) - $valor;
-	}
+	public function calculaImposto($tipoImposto, $valor, $taxa = 0) {
+		if ($tipoImposto == TipoImposto::ICMS) {
+			return ($valor / (1-$taxa)) - $valor;
+		} else if ($tipoImposto == TipoImposto::ISS) {
+			return $valor * 0.008;
+		}
 
-	public function calculaIss($valor) {
-		return $valor * 0.008;
+		return 0;
 	}
 
 	public function valorMudanca($tipoMudanca) {
@@ -33,14 +35,10 @@ class MudancaBusiness {
 
 		$seguroItens = $valorItens * (0.8/100);
 		$valorCalculado = $this->valorMudanca($tipoMudanca) * $volume;
-		$valorMudanca = ($valorKm * $km) + $valorCalculado + $seguroItens;
-		if ($tipoImposto == TipoImposto::ISS) {
-			$valorMudanca += $this->calculaIss($valorMudanca);
-		} else if ($tipoImposto == TipoImposto::ICMS) {
-			$valorMudanca += $this->calculaIcms($valorMudanca, $taxa);
-		}
-
-		return $valorMudanca;
+		$custoMudanca = ($valorKm * $km) + $valorCalculado + $seguroItens;
+		$custoMudanca += $this->calculaImposto($tipoImposto, $custoMudanca, $taxa);
+		
+		return $custoMudanca;
 	}
 
 }

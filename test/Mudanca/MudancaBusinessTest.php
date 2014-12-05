@@ -12,15 +12,15 @@ class MudancaBusinessTest extends PHPUnit {
 	
 	public function testDeveCalcularICMS() {
 		$business = new MudancaBusiness;
-		$icmsCalculado = $business->calculaIcms(5603.60, 0.03);
+		$icmsCalculado = $business->calculaImposto(TipoImposto::ICMS, 5603.60, 0.03);
 		$this->assertEquals(173.31, round($icmsCalculado, 2));
 	}
 
 	public function testDeveCalcularISS() {
 		$business = new MudancaBusiness;
-		$issCalculado = $business->calculaIss(5000);
+		$issCalculado = $business->calculaImposto(TipoImposto::ISS, 5000);
 
-		$this->assertEquals(40, $issCalculado);
+		$this->assertEquals(40, round($issCalculado, 2));
 	}
 
 	public function testDeveRetornarValorDaMudancaPorTipoResidencial() {
