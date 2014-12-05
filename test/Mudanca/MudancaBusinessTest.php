@@ -7,6 +7,7 @@ require 'vendor/autoload.php';
 use PHPUnit_Framework_TestCase as PHPUnit;
 use Mudanca\Mudanca;
 use Mudanca\TipoImposto;
+use Mudanca\TipoMudanca;
 
 class MudancaBusinessTest extends PHPUnit {
 	
@@ -25,22 +26,29 @@ class MudancaBusinessTest extends PHPUnit {
 
 	public function testDeveRetornarValorDaMudancaPorTipoResidencial() {
 		$business = new MudancaBusiness;
-		$valorMudanca = $business->valorMudanca(Mudanca::RESIDENCIAL);
+		$valorMudanca = $business->valorMudanca(TipoMudanca::RESIDENCIAL);
 
 		$this->assertEquals(3.5, $valorMudanca);
 	}
 
 	public function testDeveRetornarValorDaMudancaPorTipoComercial() {
 		$business = new MudancaBusiness;
-		$valorMudanca = $business->valorMudanca(Mudanca::COMERCIAL);
+		$valorMudanca = $business->valorMudanca(TipoMudanca::COMERCIAL);
 
 		$this->assertEquals(2.75, $valorMudanca);
 	}
 
 	public function testDeveCalcularCustoTotalDaMudanca() {
+		$mudanca = new Mudanca;
+		$mudanca->setValorItens(5700.5);
+		$mudanca->setVolume(730);
+		$mudanca->setKm(1300);
+		$mudanca->setTipoMudanca(TipoMudanca::RESIDENCIAL);
+		$mudanca->setTipoImposto(TipoImposto::ICMS);
+
+
 		$business = new MudancaBusiness;
-		$valorTotal = $business->calculaCustoTotal(5700.5, 730, 1300, 
-				Mudanca::RESIDENCIAL, TipoImposto::ICMS);
+		$valorTotal = $business->calculaCustoTotal($mudanca);
 
 		$this->assertEquals(5776.91, round($valorTotal,2));
 	}

@@ -6,6 +6,7 @@ require 'vendor/autoload.php';
 
 use Mudanca\Mudanca;
 use Mudanca\TipoImposto;
+use Mudanca\TipoMudanca;
 
 class MudancaBusiness {
 	
@@ -20,23 +21,23 @@ class MudancaBusiness {
 	}
 
 	public function valorMudanca($tipoMudanca) {
-		if ($tipoMudanca == Mudanca::RESIDENCIAL) {
+		if ($tipoMudanca == TipoMudanca::RESIDENCIAL) {
 			return 3.5;
-		} else if ($tipoMudanca == Mudanca::COMERCIAL) {
+		} else if ($tipoMudanca == TipoMudanca::COMERCIAL) {
 			return 2.75;
 		}
 
 		return 0;
 	}
 
-	public function calculaCustoTotal($valorItens, $volume, $km, $tipoMudanca, $tipoImposto) {
+	public function calculaCustoTotal($mudanca) {
 		$valorKm = 2.31;
 		$taxa = 0.03;
 
-		$seguroItens = $valorItens * (0.8/100);
-		$valorCalculado = $this->valorMudanca($tipoMudanca) * $volume;
-		$custoMudanca = ($valorKm * $km) + $valorCalculado + $seguroItens;
-		$custoMudanca += $this->calculaImposto($tipoImposto, $custoMudanca, $taxa);
+		$seguroItens = $mudanca->getValorItens() * (0.8/100);
+		$valorCalculado = $this->valorMudanca($mudanca->getTipoMudanca()) * $mudanca->getVolume();
+		$custoMudanca = ($valorKm * $mudanca->getKm()) + $valorCalculado + $seguroItens;
+		$custoMudanca += $this->calculaImposto($mudanca->getTipoImposto(), $custoMudanca, $taxa);
 		
 		return $custoMudanca;
 	}
