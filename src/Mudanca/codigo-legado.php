@@ -1,7 +1,4 @@
 <?
-	function d($var) {
-		echo "[DEBUG] = " . $var . PHP_EOL;
-	}
 
 	class Imposto {
 		const ICMS = 0, ISS = 1;
@@ -52,8 +49,7 @@
 	
 	// O valor total da mudança é o calculo abaixo
 	$soma1 = ($valorKm * $kmTotal) + $coletaEntregaTotal + $seguroTotal;
-	d($soma1);
-
+	
 	// valor total da mudança (se for ICMS)
 	$somaTotalICMS = ($soma1 / (1-$icms)) - $soma1;
 	
@@ -67,5 +63,5 @@
 	
 	$valores = moeda($valorKm) . ";" . moeda($valorKm * $kmTotal) . ";"
 		. moeda($somaTotalICMS) . ";" . moeda($freteTotal) . ";";
-	echo $valores;
+	echo $valores . PHP_EOL;
 ?>
