@@ -1,5 +1,7 @@
 <?php
 
+namespace Caelum;
+
 class MaiorMenor {
 
 	public $maior;
@@ -9,7 +11,8 @@ class MaiorMenor {
 		foreach($itens as $item) {
 			if (empty($this->maior) || $item > $this->maior) {
 				$this->maior = $item;
-			} else if (empty($this->menor) || $item < $this->menor) {
+			} 
+			if (empty($this->menor) || $item < $this->menor) {
 				$this->menor = $item;
 			} 
 
