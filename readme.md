@@ -6,12 +6,12 @@ O código completo que estava pronto antes do evento, está *pushed* na branch *
 
 ### Slides
 
-Os slides usados na palestra, estão disponíveis aqui: 
+Os slides usados na palestra, estão disponíveis aqui: http://www.slideshare.net/paulojribp/e-voce-pensava-que-tdd-era-coisa-de-javaneiro
 
-## Tecnologias Utilizadas
+### Tecnologias Utilizadas
 
 Para o projeto funcionar, usamos o **PHPUnit**. Para que todas as dependências do PHPUnit fossem satisfeitas sem mais problemas, usamos o **composer**.
 
-Nada além desses dois códigos foram necessários.
+Nada além desses dois frameworks foram necessários.
 
 Dúvidas e/ou mais informações: paulojribp at gmail.com
